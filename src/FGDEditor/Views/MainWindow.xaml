@@ -1,0 +1,23 @@
+﻿<Window x:Class="FGDEditor.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:core="clr-namespace:FGDEditor.Core;assembly=FGDEditor.Core"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}"
+        Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Command="{Binding OpenFileCommand}"/>
+                <MenuItem Header="_Save" Command="{Binding SaveFileCommand}"/>
+                <MenuItem Header="_Close" Command="{Binding CloseCommand}"/>
+                <Separator/>
+                <MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+        </Menu>
+        
+        <ContentControl DockPanel.Dock="Bottom" prism:RegionManager.RegionName="{x:Static core:RegionNames.EditorRegion}" />
+    </DockPanel>
+</Window>

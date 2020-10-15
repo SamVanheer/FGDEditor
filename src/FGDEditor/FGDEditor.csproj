@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>FGDEditor</AssemblyName>
+    <Authors>Sam Vanheer</Authors>
+    <Description>Half-Life Forge Game Data (FGD) Editor</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FGDEditor.Core\FGDEditor.Core.csproj" />
+    <ProjectReference Include="..\FGDEditor.Services.Interfaces\FGDEditor.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\FGDEditor.Services.Wpf\FGDEditor.Services.Wpf.csproj" />
+    <ProjectReference Include="..\FGDEditor.Services\FGDEditor.Services.csproj" />
+    <ProjectReference Include="..\FGD\FGD.csproj" />
+    <ProjectReference Include="..\Modules\FGDEditor.Modules.GameDataEditor\FGDEditor.Modules.GameDataEditor.csproj" />
+  </ItemGroup>
+</Project>
