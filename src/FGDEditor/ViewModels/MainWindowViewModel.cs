@@ -1,4 +1,5 @@
-﻿using FGD.Serialization;
+﻿using FGD.Grammar;
+using FGD.Serialization;
 using FGDEditor.Mvvm.Events;
 using FGDEditor.Services.Interfaces;
 using Prism.Commands;
@@ -62,7 +63,7 @@ namespace FGDEditor.ViewModels
                 {
                     using var stream = File.OpenText(fileName);
 
-                    var parser = new FGDParser();
+                    var parser = new FGDGrammerBasedParser(GrammarTypes.HalfLife1);
 
                     _gameDataEditor.SyntaxTree = parser.Parse(stream);
 
