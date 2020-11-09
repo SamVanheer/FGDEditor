@@ -10,6 +10,11 @@ namespace FGDEditor.Business
         /// </summary>
         public SyntaxTree SyntaxTree { get; set; }
 
+        /// <summary>
+        /// Whether this document has changes that have not been saved to the file
+        /// </summary>
+        public bool HasUnsavedChanges { get; set; }
+
         public FGDDocument(SyntaxTree syntaxTree)
         {
             SyntaxTree = syntaxTree;

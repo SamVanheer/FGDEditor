@@ -13,6 +13,13 @@ namespace FGDEditor.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private enum TrySaveResult
+        {
+            Success = 0,
+            Cancelled,
+            IOError
+        }
+
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IGameDataEditor _gameDataEditor;
@@ -52,9 +59,84 @@ namespace FGDEditor.ViewModels
             _gameDataEditor = gameDataEditor;
         }
 
+        private TrySaveResult TrySaveFile()
+        {
+            var fileName = _messageDialogService.ShowSaveFileDialog("FGD Files (.fgd)|*.fgd|All Files|*.*");
+
+            if (!(fileName is null))
+            {
+                _eventAggregator.GetEvent<SaveChangesEvent>().Publish(_gameDataEditor.CurrentDocument!);
+
+                try
+                {
+                    using var stream = File.CreateText(fileName);
+
+                    var writer = new FGDWriter();
+
+                    writer.Write(_gameDataEditor.CurrentDocument!.SyntaxTree, stream);
+
+                    _gameDataEditor.CurrentDocument.HasUnsavedChanges = false;
+
+                    return TrySaveResult.Success;
+                }
+                catch (IOException e)
+                {
+                    _messageDialogService.ShowMessageDialog(
+                        MessageDialogType.Error, $"An IO error occurred while writing the fgd file:\n{e.Message}", "Error writing fgd file");
+
+                    return TrySaveResult.IOError;
+                }
+            }
+
+            return TrySaveResult.Cancelled;
+        }
+
+        private bool CanProceedWithDestructiveTask()
+        {
+            if (_gameDataEditor.CurrentDocument?.HasUnsavedChanges == true)
+            {
+                var action = _messageDialogService.ShowInputDialog(
+                    "The current document has unsaved changes. Do you wish to save them?", "Unsaved changes", InputDialogButton.YesNoCancel);
+
+                switch (action)
+                {
+                    //Do nothing
+                    case InputDialogResult.None:
+                    case InputDialogResult.Cancel:
+                        return false;
+
+                    case InputDialogResult.Yes:
+                        {
+                            var result = TrySaveFile();
+
+                            if (result != TrySaveResult.Success)
+                            {
+                                if (result == TrySaveResult.IOError)
+                                {
+                                    _messageDialogService.ShowMessageDialog(
+                                        MessageDialogType.Error, "Could not save current document. Aborting file open request.", "Error");
+                                }
+
+                                return false;
+                            }
+                            break;
+                        }
+
+                    //Data will be discarded if and when the new file is opened
+                    case InputDialogResult.No:
+                        break;
+                }
+            }
+
+            return true;
+        }
+
         private void ExecuteOpenFileCommand()
         {
-            //TODO: if a file is already open the user should first be prompted to save it
+            if (!CanProceedWithDestructiveTask())
+            {
+                return;
+            }
 
             var fileName = _messageDialogService.ShowOpenFileDialog("FGD Files (.fgd)|*.fgd|All Files|*.*");
 
@@ -85,31 +167,15 @@ namespace FGDEditor.ViewModels
 
         private void ExecuteSaveFileCommand()
         {
-            var fileName = _messageDialogService.ShowSaveFileDialog("FGD Files (.fgd)|*.fgd|All Files|*.*");
-
-            if (!(fileName is null))
-            {
-                _eventAggregator.GetEvent<SaveChangesEvent>().Publish(_gameDataEditor.CurrentDocument!);
-
-                try
-                {
-                    using var stream = File.CreateText(fileName);
-
-                    var writer = new FGDWriter();
-
-                    writer.Write(_gameDataEditor.CurrentDocument!.SyntaxTree, stream);
-                }
-                catch (IOException e)
-                {
-                    _messageDialogService.ShowMessageDialog(
-                        MessageDialogType.Error, $"An IO error occurred while writing the fgd file:\n{e.Message}", "Error writing fgd file");
-                }
-            }
+            TrySaveFile();
         }
 
         private void ExecuteCloseCommand()
         {
-            //TODO: prompt to save
+            if (!CanProceedWithDestructiveTask())
+            {
+                return;
+            }
 
             _gameDataEditor.CurrentDocument = null;
             RaisePropertyChanged(nameof(HasFileOpen));
@@ -117,7 +183,10 @@ namespace FGDEditor.ViewModels
 
         private void ExecuteExitCommand()
         {
-            //TODO: if there are pending changes ask to save before shutting down
+            if (!CanProceedWithDestructiveTask())
+            {
+                return;
+            }
 
             Application.Current.Shutdown();
         }

@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace FGDEditor.Modules.GameDataEditor.Models
@@ -22,17 +22,26 @@ namespace FGDEditor.Modules.GameDataEditor.Models
             }
         }
 
-        public ObservableCollection<EditorPropertyParameterModel> Parameters { get; }
+        public ObjectListModel<EditorPropertyParameterModel> Parameters { get; }
 
-        public string FullDeclaration => $"{Name}({string.Join(", ", Parameters.Select(p => p.FullDeclaration))})";
+        public string FullDeclaration => $"{Name}({string.Join(", ", Parameters.List.Select(p => p.FullDeclaration))})";
 
         public EditorPropertyModel(string name, IEnumerable<EditorPropertyParameterModel> parameters)
         {
             _name = name;
-            Parameters = new ObservableCollection<EditorPropertyParameterModel>(parameters);
+            Parameters = new ObjectListModel<EditorPropertyParameterModel>(
+                                parameters,
+                                () => new EditorPropertyParameterModel(string.Empty, false));
+
+            Parameters.DataChanged += Parameters_DataChanged;
         }
 
-        public void NotifyFullDeclarationChanged()
+        private void Parameters_DataChanged(object? sender, EventArgs e)
+        {
+            NotifyFullDeclarationChanged();
+        }
+
+        private void NotifyFullDeclarationChanged()
         {
             RaisePropertyChanged(nameof(FullDeclaration));
         }

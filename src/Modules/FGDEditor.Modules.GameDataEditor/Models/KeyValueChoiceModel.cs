@@ -1,18 +1,38 @@
-﻿namespace FGDEditor.Modules.GameDataEditor.Models
+﻿using Prism.Mvvm;
+
+namespace FGDEditor.Modules.GameDataEditor.Models
 {
-    public sealed class KeyValueChoiceModel
+    public sealed class KeyValueChoiceModel : BindableBase
     {
-        public string Value { get; set; }
+        private string _value;
 
-        public string Description { get; set; }
+        public string Value
+        {
+            get => _value;
+            set => SetProperty(ref _value, value);
+        }
 
-        public string DefaultValue { get; set; }
+        private string _description;
+
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        private string _defaultValue;
+
+        public string DefaultValue
+        {
+            get => _defaultValue;
+            set => SetProperty(ref _defaultValue, value);
+        }
 
         public KeyValueChoiceModel(string value, string description, string defaultValue)
         {
-            Value = value;
-            Description = description;
-            DefaultValue = defaultValue;
+            _value = value;
+            _description = description;
+            _defaultValue = defaultValue;
         }
     }
 }

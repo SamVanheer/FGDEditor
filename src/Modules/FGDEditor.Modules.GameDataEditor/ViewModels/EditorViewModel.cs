@@ -51,7 +51,12 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
                 return;
             }
 
-            EntityClasses = null;
+            if (!(EntityClasses is null))
+            {
+                EntityClasses.DataChanged -= EntityClasses_DataChanged;
+                EntityClasses.CurrentChanged -= EntityClasses_CurrentChanged;
+                EntityClasses = null;
+            }
 
             if (!(e.Current is null))
             {
@@ -72,12 +77,18 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
                         Array.Empty<EditorPropertyModel>(), Array.Empty<KeyValueMapPropertyModel>()));
 
                 EntityClasses.CurrentChanged += EntityClasses_CurrentChanged;
+                EntityClasses.DataChanged += EntityClasses_DataChanged;
             }
         }
 
         private void EntityClasses_CurrentChanged(object? sender, ObjectListCurrentChangedEventArgs<EntityClassModel> e)
         {
             _eventAggregator.GetEvent<CurrentEntityClassChangedEvent>().Publish(e.Current);
+        }
+
+        private void EntityClasses_DataChanged(object? sender, EventArgs e)
+        {
+            _gameDataEditor.CurrentDocument!.HasUnsavedChanges = true;
         }
 
         private void OnSaveChanges(FGDDocument document)
@@ -87,11 +98,11 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
             //TODO: First determine the order of the classes
 
             var declarations = EntityClasses!.List.Select(entityClass => new EntityClass(entityClass.Type, entityClass.Name, entityClass.Description,
-                    entityClass.EditorProperties.Select(e => new EditorProperty(
-                        e.Name, e.Parameters.Select(p => new EditorPropertyParameter(p.Value, p.IsQuoted)))),
-                    entityClass.KeyValues.Select(kv => new KeyValueMapProperty(
+                    entityClass.EditorProperties.List.Select(e => new EditorProperty(
+                        e.Name, e.Parameters.List.Select(p => new EditorPropertyParameter(p.Value, p.IsQuoted)))),
+                    entityClass.KeyValues.List.Select(kv => new KeyValueMapProperty(
                         kv.Name, kv.Type, kv.Description, kv.DefaultValue,
-                        kv.Choices.Select(c => new KeyValueChoice(c.Value, c.Description, c.DefaultValue))))
+                        kv.Choices.List.Select(c => new KeyValueChoice(c.Value, c.Description, c.DefaultValue))))
                     ));
 
             var syntaxTree = new SyntaxTree(declarations);
@@ -99,6 +110,8 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
             _savingTree = true;
 
             document.SyntaxTree = syntaxTree;
+
+            EntityClasses!.AcceptChanges();
 
             _savingTree = false;
         }

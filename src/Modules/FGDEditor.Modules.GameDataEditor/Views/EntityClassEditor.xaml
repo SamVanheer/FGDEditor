@@ -57,8 +57,8 @@
             </Grid.ColumnDefinitions>
 
             <ListBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="5"
-                     ItemsSource="{Binding EditorPropertyList.List}"
-                     SelectedItem="{Binding EditorPropertyList.Current}">
+                     ItemsSource="{Binding CurrentClass.EditorProperties.List}"
+                     SelectedItem="{Binding CurrentClass.EditorProperties.Current}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FullDeclaration}"/>
@@ -66,14 +66,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Grid.Row="0" Grid.Column="1" Content="Add" Command="{Binding EditorPropertyList.AddObjectCommand}"/>
-            <Button Grid.Row="1" Grid.Column="1" Content="Remove" Command="{Binding EditorPropertyList.RemoveObjectCommand}"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Add" Command="{Binding CurrentClass.EditorProperties.AddObjectCommand}"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="Remove" Command="{Binding CurrentClass.EditorProperties.RemoveObjectCommand}"/>
 
-            <Button Grid.Row="2" Grid.Column="1" Content="Up" Command="{Binding EditorPropertyList.MoveObjectUpCommand}"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Down" Command="{Binding EditorPropertyList.MoveObjectDownCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Up" Command="{Binding CurrentClass.EditorProperties.MoveObjectUpCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Down" Command="{Binding CurrentClass.EditorProperties.MoveObjectDownCommand}"/>
 
             <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="5"
-                  IsEnabled="{Binding EditorPropertyList.Current, Converter={StaticResource NullToBooleanConverter}}">
+                  IsEnabled="{Binding CurrentClass.EditorProperties.Current, Converter={StaticResource NullToBooleanConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -94,13 +94,13 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Property:"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding EditorPropertyList.Current.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CurrentClass.EditorProperties.Current.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="Parameters:"/>
 
                 <DataGrid Grid.Row="3" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="2"
-                          ItemsSource="{Binding EditorPropertyParameterList.List}"
-                          SelectedItem="{Binding EditorPropertyParameterList.Current}"
+                          ItemsSource="{Binding CurrentClass.EditorProperties.Current.Parameters.List}"
+                          SelectedItem="{Binding CurrentClass.EditorProperties.Current.Parameters.Current}"
                           AutoGenerateColumns="False"
                           CanUserReorderColumns="False"
                           CanUserSortColumns="False"
@@ -115,10 +115,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Button Grid.Row="3" Grid.Column="2" Content="Add" Command="{Binding EditorPropertyParameterList.AddObjectCommand}"/>
-                <Button Grid.Row="4" Grid.Column="2" Content="Remove" Command="{Binding EditorPropertyParameterList.RemoveObjectCommand}"/>
-                <Button Grid.Row="5" Grid.Column="2" Content="Up" Command="{Binding EditorPropertyParameterList.MoveObjectUpCommand}"/>
-                <Button Grid.Row="6" Grid.Column="2" Content="Down" Command="{Binding EditorPropertyParameterList.MoveObjectDownCommand}"/>
+                <Button Grid.Row="3" Grid.Column="2" Content="Add" Command="{Binding CurrentClass.EditorProperties.Current.Parameters.AddObjectCommand}"/>
+                <Button Grid.Row="4" Grid.Column="2" Content="Remove" Command="{Binding CurrentClass.EditorProperties.Current.Parameters.RemoveObjectCommand}"/>
+                <Button Grid.Row="5" Grid.Column="2" Content="Up" Command="{Binding CurrentClass.EditorProperties.Current.Parameters.MoveObjectUpCommand}"/>
+                <Button Grid.Row="6" Grid.Column="2" Content="Down" Command="{Binding CurrentClass.EditorProperties.Current.Parameters.MoveObjectDownCommand}"/>
             </Grid>
         </Grid>
 
@@ -140,8 +140,8 @@
             </Grid.ColumnDefinitions>
 
             <ListBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="5"
-                     ItemsSource="{Binding KeyValueList.List}"
-                     SelectedItem="{Binding KeyValueList.Current}">
+                     ItemsSource="{Binding CurrentClass.KeyValues.List}"
+                     SelectedItem="{Binding CurrentClass.KeyValues.Current}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ShortDeclaration}"/>
@@ -149,14 +149,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Grid.Row="0" Grid.Column="1" Content="Add" Command="{Binding KeyValueList.AddObjectCommand}"/>
-            <Button Grid.Row="1" Grid.Column="1" Content="Remove" Command="{Binding KeyValueList.RemoveObjectCommand}"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Add" Command="{Binding CurrentClass.KeyValues.AddObjectCommand}"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="Remove" Command="{Binding CurrentClass.KeyValues.RemoveObjectCommand}"/>
 
-            <Button Grid.Row="2" Grid.Column="1" Content="Up" Command="{Binding KeyValueList.MoveObjectUpCommand}"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Down" Command="{Binding KeyValueList.MoveObjectDownCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Up" Command="{Binding CurrentClass.KeyValues.MoveObjectUpCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Down" Command="{Binding CurrentClass.KeyValues.MoveObjectDownCommand}"/>
 
             <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="5"
-                  IsEnabled="{Binding KeyValueList.Current, Converter={StaticResource NullToBooleanConverter}}">
+                  IsEnabled="{Binding CurrentClass.KeyValues.Current, Converter={StaticResource NullToBooleanConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -174,16 +174,16 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Keyvalue:"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KeyValueList.Current.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CurrentClass.KeyValues.Current.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Type:"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KeyValueList.Current.Type, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CurrentClass.KeyValues.Current.Type, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Description:"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KeyValueList.Current.Description, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CurrentClass.KeyValues.Current.Description, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Default Value:"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KeyValueList.Current.DefaultValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CurrentClass.KeyValues.Current.DefaultValue, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
@@ -207,8 +207,8 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Choices/Flags:"/>
 
                     <DataGrid Grid.Row="3" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="2"
-                          ItemsSource="{Binding KeyValueChoiceList.List}"
-                          SelectedItem="{Binding KeyValueChoiceList.Current}"
+                          ItemsSource="{Binding CurrentClass.KeyValues.Current.Choices.List}"
+                          SelectedItem="{Binding CurrentClass.KeyValues.Current.Choices.Current}"
                           AutoGenerateColumns="False"
                           CanUserReorderColumns="False"
                           CanUserSortColumns="False"
@@ -224,10 +224,10 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Button Grid.Row="3" Grid.Column="2" Content="Add" Command="{Binding KeyValueChoiceList.AddObjectCommand}"/>
-                    <Button Grid.Row="4" Grid.Column="2" Content="Remove" Command="{Binding KeyValueChoiceList.RemoveObjectCommand}"/>
-                    <Button Grid.Row="5" Grid.Column="2" Content="Up" Command="{Binding KeyValueChoiceList.MoveObjectUpCommand}"/>
-                    <Button Grid.Row="6" Grid.Column="2" Content="Down" Command="{Binding KeyValueChoiceList.MoveObjectDownCommand}"/>
+                    <Button Grid.Row="3" Grid.Column="2" Content="Add" Command="{Binding CurrentClass.KeyValues.Current.Choices.AddObjectCommand}"/>
+                    <Button Grid.Row="4" Grid.Column="2" Content="Remove" Command="{Binding CurrentClass.KeyValues.Current.Choices.RemoveObjectCommand}"/>
+                    <Button Grid.Row="5" Grid.Column="2" Content="Up" Command="{Binding CurrentClass.KeyValues.Current.Choices.MoveObjectUpCommand}"/>
+                    <Button Grid.Row="6" Grid.Column="2" Content="Down" Command="{Binding CurrentClass.KeyValues.Current.Choices.MoveObjectDownCommand}"/>
                 </Grid>
             </Grid>
         </Grid>

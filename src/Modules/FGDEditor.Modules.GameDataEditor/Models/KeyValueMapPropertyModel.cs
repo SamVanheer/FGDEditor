@@ -1,10 +1,11 @@
 ﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace FGDEditor.Modules.GameDataEditor.Models
 {
-    public sealed class KeyValueMapPropertyModel : BindableBase
+    public sealed class KeyValueMapPropertyModel : BindableBase, IChangeTracking
     {
         private string _name;
 
@@ -52,9 +53,17 @@ namespace FGDEditor.Modules.GameDataEditor.Models
             set => SetProperty(ref _defaultValue, value);
         }
 
-        public ObservableCollection<KeyValueChoiceModel> Choices { get; }
+        public ObjectListModel<KeyValueChoiceModel> Choices { get; }
 
         public string ShortDeclaration => $"{Name}({Type})";
+
+        private bool _isChanged;
+
+        public bool IsChanged
+        {
+            get => _isChanged;
+            set => SetProperty(ref _isChanged, value);
+        }
 
         public KeyValueMapPropertyModel(string name, string type, string description, string defaultValue, IEnumerable<KeyValueChoiceModel> choices)
         {
@@ -62,12 +71,21 @@ namespace FGDEditor.Modules.GameDataEditor.Models
             _type = type;
             _description = description;
             _defaultValue = defaultValue;
-            Choices = new ObservableCollection<KeyValueChoiceModel>(choices);
+
+            //TODO: define constants somewhere
+            Choices = new ObjectListModel<KeyValueChoiceModel>(choices, () => new KeyValueChoiceModel("0", string.Empty, ""));
+
+            Choices.DataChanged += Choices_DataChanged;
         }
 
-        public void NotifyShortDeclarationChanged()
+        private void Choices_DataChanged(object? sender, EventArgs e)
         {
-            RaisePropertyChanged(nameof(ShortDeclaration));
+            IsChanged = true;
+        }
+
+        public void AcceptChanges()
+        {
+            IsChanged = false;
         }
     }
 }
