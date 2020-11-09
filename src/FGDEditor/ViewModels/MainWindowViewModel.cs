@@ -114,7 +114,7 @@ namespace FGDEditor.ViewModels
                                 if (result == TrySaveResult.IOError)
                                 {
                                     _messageDialogService.ShowMessageDialog(
-                                        MessageDialogType.Error, "Could not save current document. Aborting file open request.", "Error");
+                                        MessageDialogType.Error, "Could not save current document. Aborting action.", "Error");
                                 }
 
                                 return false;
