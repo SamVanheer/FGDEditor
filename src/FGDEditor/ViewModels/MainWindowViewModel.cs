@@ -63,7 +63,7 @@ namespace FGDEditor.ViewModels
                 {
                     using var stream = File.OpenText(fileName);
 
-                    var parser = new FGDGrammerBasedParser(GrammarTypes.HalfLife1);
+                    var parser = new FGDGrammarBasedParser(GrammarTypes.HalfLife1);
 
                     _gameDataEditor.SyntaxTree = parser.Parse(stream);
 

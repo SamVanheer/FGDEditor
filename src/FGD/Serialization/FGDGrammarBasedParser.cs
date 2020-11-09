@@ -8,11 +8,11 @@ using System.Text;
 
 namespace FGD.Serialization
 {
-    public class FGDGrammerBasedParser
+    public class FGDGrammarBasedParser
     {
         public FGDGrammar Grammar { get; }
 
-        public FGDGrammerBasedParser(FGDGrammar grammar)
+        public FGDGrammarBasedParser(FGDGrammar grammar)
         {
             Grammar = grammar;
         }
