@@ -56,6 +56,9 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
                 EntityClasses.DataChanged -= EntityClasses_DataChanged;
                 EntityClasses.CurrentChanged -= EntityClasses_CurrentChanged;
                 EntityClasses = null;
+
+                //Make sure everybody knows nothing is selected
+                _eventAggregator.GetEvent<CurrentEntityClassChangedEvent>().Publish(null);
             }
 
             if (!(e.Current is null))
