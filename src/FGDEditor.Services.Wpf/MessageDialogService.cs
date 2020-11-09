@@ -20,6 +20,30 @@ namespace FGDEditor.Services.Wpf
             MessageBox.Show(message, title, MessageBoxButton.OK, image);
         }
 
+        public InputDialogResult ShowInputDialog(string message, string title, InputDialogButton buttons)
+        {
+            MessageBoxButton messageBoxButtons = buttons switch
+            {
+                InputDialogButton.Ok => MessageBoxButton.OK,
+                InputDialogButton.OkCancel => MessageBoxButton.OKCancel,
+                InputDialogButton.YesNo => MessageBoxButton.YesNo,
+                InputDialogButton.YesNoCancel => MessageBoxButton.YesNoCancel,
+                _ => throw new ArgumentException("Invalid value", nameof(buttons))
+            };
+
+            var result = MessageBox.Show(message, title, messageBoxButtons);
+
+            return result switch
+            {
+                MessageBoxResult.None => InputDialogResult.None,
+                MessageBoxResult.OK => InputDialogResult.Ok,
+                MessageBoxResult.Cancel => InputDialogResult.Cancel,
+                MessageBoxResult.Yes => InputDialogResult.Yes,
+                MessageBoxResult.No => InputDialogResult.No,
+                _ => throw new InvalidOperationException("Invalid value returned from MessageBox.Show")
+            };
+        }
+
         public string? ShowOpenFileDialog(string filter)
         {
             var dialog = new OpenFileDialog
