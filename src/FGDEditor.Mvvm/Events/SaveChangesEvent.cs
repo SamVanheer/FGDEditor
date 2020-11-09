@@ -1,11 +1,12 @@
-﻿using Prism.Events;
+﻿using FGDEditor.Business;
+using Prism.Events;
 
 namespace FGDEditor.Mvvm.Events
 {
     /// <summary>
-    /// Published when pending changes made to a syntax tree should be saved to the tree
+    /// Published when pending changes made to a document should be saved to the document
     /// </summary>
-    public sealed class SaveChangesEvent : PubSubEvent
+    public sealed class SaveChangesEvent : PubSubEvent<FGDDocument>
     {
     }
 }

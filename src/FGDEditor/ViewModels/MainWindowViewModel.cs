@@ -89,8 +89,7 @@ namespace FGDEditor.ViewModels
 
             if (!(fileName is null))
             {
-                //TODO: this event should pass the document being saved
-                _eventAggregator.GetEvent<SaveChangesEvent>().Publish();
+                _eventAggregator.GetEvent<SaveChangesEvent>().Publish(_gameDataEditor.CurrentDocument!);
 
                 try
                 {

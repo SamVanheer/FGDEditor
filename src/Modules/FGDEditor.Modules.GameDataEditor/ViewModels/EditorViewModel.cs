@@ -1,4 +1,5 @@
 ﻿using FGD.AST;
+using FGDEditor.Business;
 using FGDEditor.Modules.GameDataEditor.Events;
 using FGDEditor.Modules.GameDataEditor.Models;
 using FGDEditor.Mvvm.Events;
@@ -79,7 +80,7 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
             _eventAggregator.GetEvent<CurrentEntityClassChangedEvent>().Publish(e.Current);
         }
 
-        private void OnSaveChanges()
+        private void OnSaveChanges(FGDDocument document)
         {
             //Create a new tree that has the new set of classes
 
@@ -97,7 +98,7 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
 
             _savingTree = true;
 
-            _gameDataEditor.CurrentDocument!.SyntaxTree = syntaxTree;
+            document.SyntaxTree = syntaxTree;
 
             _savingTree = false;
         }
