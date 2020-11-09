@@ -1,4 +1,4 @@
-﻿using FGD.AST;
+﻿using FGDEditor.Business;
 using System;
 
 namespace FGDEditor.Services.Interfaces
@@ -6,13 +6,13 @@ namespace FGDEditor.Services.Interfaces
     public interface IGameDataEditor
     {
         /// <summary>
-        /// The current syntax tree being edited, if any
+        /// The current document, if any
         /// </summary>
-        SyntaxTree? SyntaxTree { get; set; }
+        FGDDocument? CurrentDocument { get; set; }
 
         /// <summary>
-        /// Raised when the syntax tree is changed
+        /// Raised when the current document is changed
         /// </summary>
-        event EventHandler<SyntaxTreeChangedEventArgs> SyntaxTreeChanged;
+        event EventHandler<DocumentChangedEventArgs> DocumentChanged;
     }
 }

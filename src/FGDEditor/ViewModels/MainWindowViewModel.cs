@@ -1,5 +1,6 @@
 ﻿using FGD.Grammar;
 using FGD.Serialization;
+using FGDEditor.Business;
 using FGDEditor.Mvvm.Events;
 using FGDEditor.Services.Interfaces;
 using Prism.Commands;
@@ -28,7 +29,7 @@ namespace FGDEditor.ViewModels
 
         public DelegateCommand OpenFileCommand => _openFileCommand ??= new DelegateCommand(ExecuteOpenFileCommand);
 
-        public bool HasFileOpen => !(_gameDataEditor.SyntaxTree is null);
+        public bool HasFileOpen => !(_gameDataEditor.CurrentDocument is null);
 
         private DelegateCommand? _saveFileCommand;
 
@@ -65,7 +66,7 @@ namespace FGDEditor.ViewModels
 
                     var parser = new FGDGrammarBasedParser(GrammarTypes.HalfLife1);
 
-                    _gameDataEditor.SyntaxTree = parser.Parse(stream);
+                    _gameDataEditor.CurrentDocument = new FGDDocument(parser.Parse(stream));
 
                     RaisePropertyChanged(nameof(HasFileOpen));
                 }
@@ -88,6 +89,7 @@ namespace FGDEditor.ViewModels
 
             if (!(fileName is null))
             {
+                //TODO: this event should pass the document being saved
                 _eventAggregator.GetEvent<SaveChangesEvent>().Publish();
 
                 try
@@ -96,7 +98,7 @@ namespace FGDEditor.ViewModels
 
                     var writer = new FGDWriter();
 
-                    writer.Write(_gameDataEditor.SyntaxTree!, stream);
+                    writer.Write(_gameDataEditor.CurrentDocument!.SyntaxTree, stream);
                 }
                 catch (IOException e)
                 {
@@ -110,7 +112,7 @@ namespace FGDEditor.ViewModels
         {
             //TODO: prompt to save
 
-            _gameDataEditor.SyntaxTree = null;
+            _gameDataEditor.CurrentDocument = null;
             RaisePropertyChanged(nameof(HasFileOpen));
         }
 

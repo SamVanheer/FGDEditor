@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FGDEditor.Business\FGDEditor.Business.csproj" />
     <ProjectReference Include="..\FGD\FGD.csproj" />
   </ItemGroup>
 

@@ -32,17 +32,17 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
             _eventAggregator = eventAggregator;
             _gameDataEditor = gameDataEditor;
 
-            _gameDataEditor.SyntaxTreeChanged += GameDataEditor_SyntaxTreeChanged;
+            _gameDataEditor.DocumentChanged += GameDataEditor_DocumentChanged;
 
             _eventAggregator.GetEvent<SaveChangesEvent>().Subscribe(OnSaveChanges);
         }
 
         public void Destroy()
         {
-            _gameDataEditor.SyntaxTreeChanged -= GameDataEditor_SyntaxTreeChanged;
+            _gameDataEditor.DocumentChanged -= GameDataEditor_DocumentChanged;
         }
 
-        private void GameDataEditor_SyntaxTreeChanged(object? sender, SyntaxTreeChangedEventArgs e)
+        private void GameDataEditor_DocumentChanged(object? sender, DocumentChangedEventArgs e)
         {
             //If we're saving a new tree then the current set of classes is already up-to-date
             if (_savingTree)
@@ -54,7 +54,7 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
 
             if (!(e.Current is null))
             {
-                var list = new ObservableCollection<EntityClassModel>(e.Current.Declarations
+                var list = new ObservableCollection<EntityClassModel>(e.Current.SyntaxTree.Declarations
                     .OfType<EntityClass>()
                     .Select(e => new EntityClassModel(e.Type, e.Name, e.Description,
                         e.EditorProperties.Select(p => new EditorPropertyModel(p.Name,
@@ -97,7 +97,7 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
 
             _savingTree = true;
 
-            _gameDataEditor.SyntaxTree = syntaxTree;
+            _gameDataEditor.CurrentDocument!.SyntaxTree = syntaxTree;
 
             _savingTree = false;
         }

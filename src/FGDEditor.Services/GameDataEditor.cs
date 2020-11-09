@@ -1,4 +1,4 @@
-﻿using FGD.AST;
+﻿using FGDEditor.Business;
 using FGDEditor.Services.Interfaces;
 using System;
 
@@ -6,24 +6,24 @@ namespace FGDEditor.Services
 {
     public class GameDataEditor : IGameDataEditor
     {
-        private SyntaxTree? _syntaxTree;
+        private FGDDocument? _currentDocument;
 
-        public SyntaxTree? SyntaxTree
+        public FGDDocument? CurrentDocument
         {
-            get => _syntaxTree;
+            get => _currentDocument;
 
             set
             {
-                if (_syntaxTree != value)
+                if (_currentDocument != value)
                 {
-                    var previous = _syntaxTree;
-                    _syntaxTree = value;
+                    var previous = _currentDocument;
+                    _currentDocument = value;
 
-                    SyntaxTreeChanged?.Invoke(this, new SyntaxTreeChangedEventArgs(previous, _syntaxTree));
+                    DocumentChanged?.Invoke(this, new DocumentChangedEventArgs(previous, _currentDocument));
                 }
             }
         }
 
-        public event EventHandler<SyntaxTreeChangedEventArgs>? SyntaxTreeChanged;
+        public event EventHandler<DocumentChangedEventArgs>? DocumentChanged;
     }
 }

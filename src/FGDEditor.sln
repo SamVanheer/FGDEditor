@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FGDEditor.Mvvm", "FGDEditor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FGDEditor.Services.Wpf", "FGDEditor.Services.Wpf\FGDEditor.Services.Wpf.csproj", "{1A72E1E5-EDFA-4994-8A5F-7EB190D56081}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FGDEditor.Business", "FGDEditor.Business\FGDEditor.Business.csproj", "{6018790A-C8CB-433D-B002-972CB092F630}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{1A72E1E5-EDFA-4994-8A5F-7EB190D56081}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A72E1E5-EDFA-4994-8A5F-7EB190D56081}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A72E1E5-EDFA-4994-8A5F-7EB190D56081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6018790A-C8CB-433D-B002-972CB092F630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6018790A-C8CB-433D-B002-972CB092F630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6018790A-C8CB-433D-B002-972CB092F630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6018790A-C8CB-433D-B002-972CB092F630}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
