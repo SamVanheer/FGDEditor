@@ -43,7 +43,7 @@ namespace FGDEditor.Modules.GameDataEditor.Models
         private DelegateCommand? _addObjectCommand;
 
         public DelegateCommand AddObjectCommand =>
-            _addObjectCommand ??= new DelegateCommand(ExecuteObjectCommand);
+            _addObjectCommand ??= new DelegateCommand(ExecuteAddObjectCommand);
 
         private DelegateCommand? _removeObjectCommand;
 
@@ -74,7 +74,7 @@ namespace FGDEditor.Modules.GameDataEditor.Models
             _objectFactory = objectFactory;
         }
 
-        private void ExecuteObjectCommand()
+        private void ExecuteAddObjectCommand()
         {
             var newObject = _objectFactory();
 
