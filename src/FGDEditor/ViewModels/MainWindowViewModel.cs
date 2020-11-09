@@ -1,4 +1,5 @@
-﻿using FGD.Grammar;
+﻿using FGD.AST;
+using FGD.Grammar;
 using FGD.Serialization;
 using FGDEditor.Business;
 using FGDEditor.Mvvm.Events;
@@ -31,6 +32,11 @@ namespace FGDEditor.ViewModels
             get => _title;
             set => SetProperty(ref _title, value);
         }
+
+        private DelegateCommand? _newFileCommand;
+
+        public DelegateCommand NewFileCommand =>
+            _newFileCommand ??= new DelegateCommand(ExecuteNewFileCommand);
 
         private DelegateCommand? _openFileCommand;
 
@@ -129,6 +135,18 @@ namespace FGDEditor.ViewModels
             }
 
             return true;
+        }
+
+        private void ExecuteNewFileCommand()
+        {
+            if (!CanProceedWithDestructiveTask())
+            {
+                return;
+            }
+
+            _gameDataEditor.CurrentDocument = new FGDDocument(new SyntaxTree());
+
+            RaisePropertyChanged(nameof(HasFileOpen));
         }
 
         private void ExecuteOpenFileCommand()
