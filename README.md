@@ -30,6 +30,7 @@ The project follows a common Prism architectural design where different componen
 | FGDEditor | Contains the Application and MainWindow classes as well as startup logic |
 | FGDEditor.Core | Defines region names used by modules as well as the main window |
 | FGDEditor.Mvvm | Contains common MVVM functionality |
+| FGDEditor.Business | Contains business logic and types |
 | FGDEditor.Services.Interfaces | Contains interfaces of services |
 | FGDEditor.Services | Contains the implementations of service interfaces |
 | FGDEditor.Services.Wpf | Contains WPF-specific service implementations |
