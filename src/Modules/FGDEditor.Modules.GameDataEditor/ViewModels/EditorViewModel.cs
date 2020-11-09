@@ -33,17 +33,17 @@ namespace FGDEditor.Modules.GameDataEditor.ViewModels
             _eventAggregator = eventAggregator;
             _gameDataEditor = gameDataEditor;
 
-            _gameDataEditor.DocumentChanged += GameDataEditor_DocumentChanged;
+            _gameDataEditor.CurrentDocumentChanged += GameDataEditor_DocumentChanged;
 
             _eventAggregator.GetEvent<SaveChangesEvent>().Subscribe(OnSaveChanges);
         }
 
         public void Destroy()
         {
-            _gameDataEditor.DocumentChanged -= GameDataEditor_DocumentChanged;
+            _gameDataEditor.CurrentDocumentChanged -= GameDataEditor_DocumentChanged;
         }
 
-        private void GameDataEditor_DocumentChanged(object? sender, DocumentChangedEventArgs e)
+        private void GameDataEditor_DocumentChanged(object? sender, CurrentDocumentChangedEventArgs e)
         {
             //If we're saving a new tree then the current set of classes is already up-to-date
             if (_savingTree)

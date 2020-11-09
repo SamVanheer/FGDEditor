@@ -13,6 +13,6 @@ namespace FGDEditor.Services.Interfaces
         /// <summary>
         /// Raised when the current document is changed
         /// </summary>
-        event EventHandler<DocumentChangedEventArgs> DocumentChanged;
+        event EventHandler<CurrentDocumentChangedEventArgs> CurrentDocumentChanged;
     }
 }

@@ -3,12 +3,12 @@ using System;
 
 namespace FGDEditor.Services.Interfaces
 {
-    public sealed class DocumentChangedEventArgs : EventArgs
+    public sealed class CurrentDocumentChangedEventArgs : EventArgs
     {
         public FGDDocument? Previous { get; }
         public FGDDocument? Current { get; }
 
-        public DocumentChangedEventArgs(FGDDocument? previous, FGDDocument? current)
+        public CurrentDocumentChangedEventArgs(FGDDocument? previous, FGDDocument? current)
         {
             Previous = previous;
             Current = current;

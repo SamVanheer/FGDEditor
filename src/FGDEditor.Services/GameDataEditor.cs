@@ -19,11 +19,11 @@ namespace FGDEditor.Services
                     var previous = _currentDocument;
                     _currentDocument = value;
 
-                    DocumentChanged?.Invoke(this, new DocumentChangedEventArgs(previous, _currentDocument));
+                    CurrentDocumentChanged?.Invoke(this, new CurrentDocumentChangedEventArgs(previous, _currentDocument));
                 }
             }
         }
 
-        public event EventHandler<DocumentChangedEventArgs>? DocumentChanged;
+        public event EventHandler<CurrentDocumentChangedEventArgs>? CurrentDocumentChanged;
     }
 }
